@@ -3,6 +3,7 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import axios from "axios";
+import { Button } from "@mui/material";
 
 function App() {
   const GOOGLE_API = import.meta.env.VITE_GC_URL;
@@ -58,9 +59,14 @@ function App() {
 
   return (
     <>
-      <button onClick={fetchSheetData}>Fetch</button>
+      <Button
+        className="border-1 rounded-2 p-4 font-bold bg-[#1a1a1a] text-white"
+        onClick={fetchSheetData}
+      >
+        Fetch
+      </Button>
       {displaySingleSheetBtn && (
-        <button onClick={fetchDataFromSheet}>Fetch Single Sheet</button>
+        <Button onClick={fetchDataFromSheet}>Fetch Single Sheet</Button>
       )}
     </>
   );
