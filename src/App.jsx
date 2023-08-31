@@ -3,7 +3,9 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import axios from "axios";
-import { Button } from "@mui/material";
+import { Button } from "@material-tailwind/react";
+import { Templates } from "./Components/templates/Templates";
+// import { Button } from "@mui/material";
 
 function App() {
   const GOOGLE_API = import.meta.env.VITE_GC_URL;
@@ -12,9 +14,15 @@ function App() {
   const SHEET_ID = "1252178713";
   const RANGE = "Ubaid Ur Rehman!B10:I";
   const [allSheets, setallSheets] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [selectedTemplate, setSelectedTemplate] = useState(null);
   const [displaySingleSheetBtn, setdisplaySingleSheetBtn] = useState(false);
 
   console.log("allsheets:: ", allSheets);
+
+  const handleOpenModel = () => {
+    setOpen((prevOpen) => !prevOpen);
+  };
 
   const fetchSheetData = async () => {
     try {
@@ -66,8 +74,24 @@ function App() {
         Fetch
       </Button>
       {displaySingleSheetBtn && (
-        <Button onClick={fetchDataFromSheet}>Fetch Single Sheet</Button>
+        <>
+          <Button
+            className=" ml-3 border-1 rounded-2 p-4 font-bold bg-[#1a1a1a] text-white"
+            onClick={fetchDataFromSheet}
+          >
+            Fetch Single Sheet
+          </Button>
+
+          <Button
+            className=" ml-3 border-1 rounded-2 p-4 font-bold bg-[#1a1a1a] text-white"
+            onClick={handleOpenModel}
+          >
+            Select Email Template
+          </Button>
+        </>
       )}
+
+      {open && <Templates open={open} handleOpenModel={handleOpenModel} />}
     </>
   );
 }
