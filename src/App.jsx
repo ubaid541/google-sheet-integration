@@ -32,26 +32,13 @@ function App() {
 
   console.log("allsheets:: ", allSheets);
 
-  const SendEmail = (e) => {
+  const SendEmail = async (e) => {
     e.preventDefault();
     setSendingBtn(true);
 
-    // get emails and insert into email template
     const names = candidateData?.map((item) => item[0]);
     const positions = candidateData?.map((item) => item[2]);
     const emails = candidateData?.map((item) => item[1]);
-
-    // just console logging
-    const tableData = [];
-    for (let i = 0; i < names.length; i++) {
-      tableData.push({
-        Name: names[i],
-        Position: positions[i],
-        Email: emails[i],
-      });
-    }
-
-    console.table(tableData);
 
     const emailData = [];
 
@@ -61,44 +48,41 @@ function App() {
 
       splitName.splice(
         splitName.indexOf("["),
-        splitName.indexOf("]"),
+        splitName.indexOf("]") + 1,
         names[i]
       );
       splitPosition.splice(
         splitPosition.indexOf("["),
-        splitPosition.indexOf("]"),
+        splitPosition.indexOf("]") + 1,
         positions[i]
       );
 
       const joinName = splitName.join("");
       const joinPosition = splitPosition.join("");
-      const obj = {
-        subject: joinName,
-        candidateName: joinPosition,
-        email: emails[i],
-      };
 
-      emailData.push({
+      emailData.push([
+        emails[i],
+        joinPosition,
+        selectedTemplate?.body,
+        joinName,
+      ]);
+
+      console.log("candidate details:: ", {
         subject: joinName,
         candidateName: joinPosition,
         email: emails[i],
       });
-
-      console.log("candidate details:: ", obj);
-      console.log("email data array:: ", emailData);
     }
 
-    const formData = new FormData();
-
-    formData.append("candidates", emails);
-    formData.append("subject");
-    formData.append("body");
-
-    return;
+    console.log("email data: ", emailData);
 
     try {
-      const res = axios.post("http://localhost:6000/send-emails", formData);
-      toast.success("Emails Sent Successfully .", {
+      // Assuming the emailData is now in the desired format
+      const res = await axios.post(
+        "http://localhost:9000/send-emails",
+        emailData
+      );
+      toast.success("Emails Sent Successfully.", {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -112,8 +96,8 @@ function App() {
       setSendingBtn(false);
     } catch (error) {
       setSendingBtn(false);
-      console.error("error: ", error);
-      toast.error("Sorry, unable to send emails .", {
+      console.log("error: ", error);
+      toast.error("Sorry, unable to send emails.", {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -125,6 +109,100 @@ function App() {
       });
     }
   };
+
+  // const SendEmail = (e) => {
+  //   e.preventDefault();
+  //   setSendingBtn(true);
+
+  //   // get emails and insert into email template
+  //   const names = candidateData?.map((item) => item[0]);
+  //   const positions = candidateData?.map((item) => item[2]);
+  //   const emails = candidateData?.map((item) => item[1]);
+
+  //   // just console logging
+  //   const tableData = [];
+  //   for (let i = 0; i < names.length; i++) {
+  //     tableData.push({
+  //       Name: names[i],
+  //       Position: positions[i],
+  //       Email: emails[i],
+  //     });
+  //   }
+
+  //   console.table(tableData);
+
+  //   const emailData = [];
+
+  //   for (let i = 0; i < names.length; i++) {
+  //     const splitName = selectedTemplate?.candidateName.split("");
+  //     const splitPosition = selectedTemplate?.subject.split("");
+
+  //     splitName.splice(
+  //       splitName.indexOf("["),
+  //       splitName.indexOf("]"),
+  //       names[i]
+  //     );
+  //     splitPosition.splice(
+  //       splitPosition.indexOf("["),
+  //       splitPosition.indexOf("]"),
+  //       positions[i]
+  //     );
+
+  //     const joinName = splitName.join("");
+  //     const joinPosition = splitPosition.join("");
+  //     const obj = {
+  //       subject: joinName,
+  //       candidateName: joinPosition,
+  //       email: emails[i],
+  //     };
+
+  //     emailData.push({
+  //       subject: joinName,
+  //       candidateName: joinPosition,
+  //       email: emails[i],
+  //     });
+
+  //     console.log("candidate details:: ", obj);
+  //     console.log("email data array:: ", emailData);
+  //   }
+
+  //   const formData = new FormData();
+
+  //   formData.append("candidates", emails);
+  //   formData.append("subject");
+  //   formData.append("body");
+
+  //   return;
+
+  //   try {
+  //     const res = axios.post("http://localhost:6000/send-emails", formData);
+  //     toast.success("Emails Sent Successfully .", {
+  //       position: "top-right",
+  //       autoClose: 3000,
+  //       hideProgressBar: false,
+  //       closeOnClick: true,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //       progress: undefined,
+  //       theme: "light",
+  //     });
+  //     console.log("response:: ", res);
+  //     setSendingBtn(false);
+  //   } catch (error) {
+  //     setSendingBtn(false);
+  //     console.error("error: ", error);
+  //     toast.error("Sorry, unable to send emails .", {
+  //       position: "top-right",
+  //       autoClose: 3000,
+  //       hideProgressBar: false,
+  //       closeOnClick: true,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //       progress: undefined,
+  //       theme: "light",
+  //     });
+  //   }
+  // };
 
   const handleOpenModel = () => {
     setOpen((prevOpen) => !prevOpen);
