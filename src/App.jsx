@@ -10,23 +10,121 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { CircularProgress } from "@mui/material";
+import { useStateContext } from "./context/ContextProvider";
 
 function App() {
+  const { selectedTemplate, setSelectedTemplate } = useStateContext();
+  console.log("selected template:: ", selectedTemplate);
+
   const GOOGLE_API = import.meta.env.VITE_GC_URL;
   const GOOGLE_API_KEY = import.meta.env.VITE_GC_API;
   const GS_ID = "13-bLObOmH58t8RrLsq3yGoXxBdRipoi1b9xE6pQvcvw";
   // const GS_ID = "15GZStyT_1PoR0F2bj-I46ZITgasB90UZYgk5J76D6_E";
   const SHEET_ID = "1252178713";
   // const RANGE = "Ubaid Ur Rehman!B10:I";
-  const RANGE = "candidates!B2:C";
+  const RANGE = "candidates!B2:D";
   const [allSheets, setallSheets] = useState([]);
   const [open, setOpen] = useState(false);
-  const [selectedTemplate, setSelectedTemplate] = useState(null);
   const [displaySingleSheetBtn, setdisplaySingleSheetBtn] = useState(false);
   const [btnLoading, setBtnLoading] = useState(false);
+  const [sendingBtn, setSendingBtn] = useState(false);
   const [candidateData, setCandidateData] = useState([]);
 
   console.log("allsheets:: ", allSheets);
+
+  const SendEmail = (e) => {
+    e.preventDefault();
+    setSendingBtn(true);
+
+    // get emails and insert into email template
+    const names = candidateData?.map((item) => item[0]);
+    const positions = candidateData?.map((item) => item[2]);
+    const emails = candidateData?.map((item) => item[1]);
+
+    // just console logging
+    const tableData = [];
+    for (let i = 0; i < names.length; i++) {
+      tableData.push({
+        Name: names[i],
+        Position: positions[i],
+        Email: emails[i],
+      });
+    }
+
+    console.table(tableData);
+
+    const emailData = [];
+
+    for (let i = 0; i < names.length; i++) {
+      const splitName = selectedTemplate?.candidateName.split("");
+      const splitPosition = selectedTemplate?.subject.split("");
+
+      splitName.splice(
+        splitName.indexOf("["),
+        splitName.indexOf("]"),
+        names[i]
+      );
+      splitPosition.splice(
+        splitPosition.indexOf("["),
+        splitPosition.indexOf("]"),
+        positions[i]
+      );
+
+      const joinName = splitName.join("");
+      const joinPosition = splitPosition.join("");
+      const obj = {
+        subject: joinName,
+        candidateName: joinPosition,
+        email: emails[i],
+      };
+
+      emailData.push({
+        subject: joinName,
+        candidateName: joinPosition,
+        email: emails[i],
+      });
+
+      console.log("candidate details:: ", obj);
+      console.log("email data array:: ", emailData);
+    }
+
+    const formData = new FormData();
+
+    formData.append("candidates", emails);
+    formData.append("subject");
+    formData.append("body");
+
+    return;
+
+    try {
+      const res = axios.post("http://localhost:6000/send-emails", formData);
+      toast.success("Emails Sent Successfully .", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      console.log("response:: ", res);
+      setSendingBtn(false);
+    } catch (error) {
+      setSendingBtn(false);
+      console.error("error: ", error);
+      toast.error("Sorry, unable to send emails .", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
 
   const handleOpenModel = () => {
     setOpen((prevOpen) => !prevOpen);
@@ -96,7 +194,7 @@ function App() {
       const emails = data?.map((item) => item);
 
       console.log("email", emails);
-      setCandidateData(emails);
+      setCandidateData(data);
 
       console.log("Data from Sheet:", data);
     } catch (error) {
@@ -141,9 +239,37 @@ function App() {
         </>
       )}
 
+      {selectedTemplate && (
+        <Button
+          className=" ml-3 border-1 rounded-2 p-4 font-bold bg-[#1a1a1a] text-white"
+          onClick={SendEmail}
+        >
+          {setSendingBtn ? <span>Send Emails</span> : <CircularProgress />}
+        </Button>
+      )}
+
       {open && <Templates open={open} handleOpenModel={handleOpenModel} />}
     </>
   );
 }
 
 export default App;
+
+// const names = ["junaid", "qasim", "ubaid", "hamamd"];
+// const positions = ["jr dev", "sr qa", "sr react developer at Hikal agency", "sr cloud engineer"];
+// const emailsArr = ["sr", "sr2"];
+
+// const emails = [];
+
+// const selectedTemplate = {
+//   subjet: "hello mr [name]"
+// }
+
+// for(let i = 0 ; i < names.length; i++) {
+//   const candid = selectedTemplate.candidateName;
+//   const obj = {
+//     email: emailsArr[i],
+//     candidateName: candid.split(""),
+//     subject: positions[i]
+//   };
+// }

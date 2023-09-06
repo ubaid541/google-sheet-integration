@@ -3,16 +3,17 @@ import { useStateContext } from "../../context/ContextProvider";
 
 const SingleTemplate = ({ email, handleOpenModel }) => {
   const { selectedTemplate, setSelectedTemplate } = useStateContext();
-  const handleSelectTemplate = (e, id) => {
-    console.log("selected template:: ", id);
-    setSelectedTemplate(id);
+  console.log("selected template: ", selectedTemplate);
+  const handleSelectTemplate = (e, email) => {
+    console.log("selected template:: ", email);
+    setSelectedTemplate(email);
     handleOpenModel(true);
   };
   return (
     <>
       <div
         className="bg-[#111827] p-6 cursor-pointer hover:border-[#DA1F26] border transition duration-300"
-        onClick={(e) => handleSelectTemplate(e, email?.id)}
+        onClick={(e) => handleSelectTemplate(e, email)}
       >
         <h2 className="font-bold mb-3">{email?.title}</h2>
         <h3 className="font-semibold mb-2">
