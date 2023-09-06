@@ -48,7 +48,11 @@ export const Templates = ({ open, handleOpenModel }) => {
             <div className="w-full my-5 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3 gap-x-3 gap-y-3">
               {emailTemplates?.length > 0 ? (
                 emailTemplates?.map((email, index) => (
-                  <SingleTemplate email={email} key={index} />
+                  <SingleTemplate
+                    email={email}
+                    key={index}
+                    handleOpenModel={handleOpenModel}
+                  />
                 ))
               ) : (
                 <h2 className="text-center"> No Templates Available</h2>

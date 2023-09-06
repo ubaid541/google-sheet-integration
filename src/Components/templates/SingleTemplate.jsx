@@ -1,9 +1,13 @@
 import React from "react";
 import { useStateContext } from "../../context/ContextProvider";
 
-const SingleTemplate = ({ email }) => {
+const SingleTemplate = ({ email, handleOpenModel }) => {
   const { selectedTemplate, setSelectedTemplate } = useStateContext();
-  const handleSelectTemplate = () => {};
+  const handleSelectTemplate = (e, id) => {
+    console.log("selected template:: ", id);
+    setSelectedTemplate(id);
+    handleOpenModel(true);
+  };
   return (
     <>
       <div
