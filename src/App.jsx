@@ -18,11 +18,12 @@ function App() {
 
   const GOOGLE_API = import.meta.env.VITE_GC_URL;
   const GOOGLE_API_KEY = import.meta.env.VITE_GC_API;
-  const GS_ID = "13-bLObOmH58t8RrLsq3yGoXxBdRipoi1b9xE6pQvcvw";
-  // const GS_ID = "15GZStyT_1PoR0F2bj-I46ZITgasB90UZYgk5J76D6_E";
+  // const GS_ID = "13-bLObOmH58t8RrLsq3yGoXxBdRipoi1b9xE6pQvcvw";
+  const GS_ID = "1IBM-LSQoaQwbjateHm2SpOQEA5xkhRY43al1cBWVwD8";
   const SHEET_ID = "1252178713";
   // const RANGE = "Ubaid Ur Rehman!B10:I";
-  const RANGE = "candidates!B2:D";
+  // const RANGE = "candidates!B2:D";
+  const RANGE = "PHP Laravel!B2:H";
   const [allSheets, setallSheets] = useState([]);
   const [open, setOpen] = useState(false);
   const [displaySingleSheetBtn, setdisplaySingleSheetBtn] = useState(false);
@@ -45,6 +46,7 @@ function App() {
     for (let i = 0; i < names.length; i++) {
       const splitName = selectedTemplate?.candidateName.split("");
       const splitPosition = selectedTemplate?.subject.split("");
+      const splitMessage = selectedTemplate?.body.split("");
 
       splitName.splice(
         splitName.indexOf("["),
@@ -52,6 +54,12 @@ function App() {
         names[i]
       );
       splitPosition.splice(
+        splitPosition.indexOf("["),
+        splitPosition.indexOf("]") + 1,
+        positions[i]
+      );
+
+      splitMessage.splice(
         splitPosition.indexOf("["),
         splitPosition.indexOf("]") + 1,
         positions[i]
@@ -75,6 +83,8 @@ function App() {
     }
 
     console.log("email data: ", emailData);
+
+    return;
 
     try {
       // Assuming the emailData is now in the desired format
