@@ -50,7 +50,7 @@ const SingleTemplate = ({ email, handleOpenModel }) => {
 
   useEffect(() => {
     setSelectedTemplate({
-      ...selectedTemplate,
+      ...email,
       body: editedBody,
     });
   }, []);
@@ -71,12 +71,15 @@ const SingleTemplate = ({ email, handleOpenModel }) => {
 
         {isEditing ? (
           <>
+            <span className="text-[#DA1F26]">
+              kindly donot remove brackets from the template
+            </span>
             <Textarea
               value={editedBody}
               onChange={(e) => {
                 setEditedBody(e.target.value);
               }}
-              rows="4"
+              rows="6"
               // cols="50"
               onClick={(e) => e.stopPropagation()}
             ></Textarea>

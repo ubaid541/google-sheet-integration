@@ -4,7 +4,7 @@ export const emailTemplates = [
     title: "Template 1",
     subject: "Invitation for Initial Interview - [Position Name]",
     candidateName: "Mr  [Candidate's Name]",
-    body: `I hope this message finds you well. We were impressed by your application for the [Position Name] role at [Company Name]. We'd like to invite you for a phone interview to learn more about your background and discuss your potential fit for our team.
+    body: `I hope this message finds you well. We were impressed by your application for the [Position Name] role at Hikal Agency. We'd like to invite you for a phone interview to learn more about your background and discuss your potential fit for our team.
 
     Date: [Date]
     Time: [Time]
@@ -19,7 +19,7 @@ export const emailTemplates = [
     Best regards,
     [Your Name]
     [Your Title]
-    [Company Name]
+    Hikal Agency
     [Contact Information]`,
   },
   {
@@ -27,7 +27,7 @@ export const emailTemplates = [
     title: "Template 2",
     subject: "Invitation for Initial Interview - [Position Name]",
     candidateName: "Mr  [Candidate's Name]",
-    body: `I hope you're having a great day! We came across your impressive background and accomplishments, and we'd like to invite you to take the next step in our recruitment process for the [Position Name] role at [Company Name].
+    body: `I hope you're having a great day! We came across your impressive background and accomplishments, and we'd like to invite you to take the next step in our recruitment process for the [Position Name] role at Hikal Agency.
 
     We believe that your skills and experience could be a great fit for our team. We'd love to learn more about you and discuss how your contributions could make an impact on our organization.
     
@@ -44,7 +44,7 @@ export const emailTemplates = [
     Best regards,
     [Your Name]
     [Your Title]
-    [Company Name]
+    Hikal Agency
     [Contact Information]`,
   },
   {
@@ -53,7 +53,7 @@ export const emailTemplates = [
     subject: "Invitation for Initial Interview - [Position Name]",
     candidateName: "Mr  [Candidate's Name]",
     body: `
-    I hope this message finds you well. We were impressed by your application for the [Position Name] role at [Company Name]. We'd like to invite you for a phone interview to learn more about your background and discuss your potential fit for our team.
+    I hope this message finds you well. We were impressed by your application for the [Position Name] role at Hikal Agency. We'd like to invite you for a phone interview to learn more about your background and discuss your potential fit for our team.
     
     Date: [Date]
     Time: [Time]
@@ -68,7 +68,7 @@ export const emailTemplates = [
     Best regards,
     [Your Name]
     [Your Title]
-    [Company Name]
+    Hikal Agency
     [Contact Information]`,
   },
   {
@@ -78,7 +78,7 @@ export const emailTemplates = [
     candidateName: "Mr  [Candidate's Name]",
     body: `Hi [Candidate's Name],
 
-    We hope you're doing well. Your application for the [Position Name] role at [Company Name] has caught our attention. We'd like to invite you for a video interview to further discuss your qualifications and your fit for the position.
+    We hope you're doing well. Your application for the [Position Name] role at Hikal Agency has caught our attention. We'd like to invite you for a video interview to further discuss your qualifications and your fit for the position.
     
     Date: [Date]
     Time: [Time]
@@ -88,12 +88,12 @@ export const emailTemplates = [
     
     To confirm your availability for the video interview, please reply to this email or contact us at [Contact Email/Number] by [Confirmation Deadline]. If the scheduled time doesn't work for you, feel free to suggest an alternative.
     
-    We're eager to connect with you and learn more about your potential contributions. Thank you for your interest in [Company Name].
+    We're eager to connect with you and learn more about your potential contributions. Thank you for your interest in Hikal Agency.
     
     Warm regards,
     [Your Name]
     [Your Title]
-    [Company Name]
+    Hikal Agency
     [Contact Information]`,
   },
 ];
