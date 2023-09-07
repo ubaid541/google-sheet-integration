@@ -71,8 +71,9 @@ const SingleTemplate = ({ email, handleOpenModel }) => {
 
         {isEditing ? (
           <>
-            <span className="text-[#DA1F26]">
-              kindly donot remove brackets from the template
+            <span className="text-[#DA1F26] text-sm">
+              Donot remove brackets from the template. No need to add date, time
+              and name.
             </span>
             <Textarea
               value={editedBody}
